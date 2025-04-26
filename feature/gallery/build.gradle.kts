@@ -7,6 +7,7 @@ plugins {
 dependencies {
     api(project(":core:domain"))
     api(project(":core:model"))
+    api(project(":core:ui"))
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)

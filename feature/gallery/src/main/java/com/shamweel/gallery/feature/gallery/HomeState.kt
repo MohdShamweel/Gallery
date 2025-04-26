@@ -1,0 +1,12 @@
+package com.shamweel.gallery.feature.gallery
+
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
+import com.shamweel.gallery.core.model.MediaSource
+
+data class HomeState(
+    val albums: MutableMap<String?, List<MediaSource>> = mutableStateMapOf(),
+    val mediaAllImages : List<MediaSource> = mutableStateListOf(),
+    val mediaAllVideos : List<MediaSource> = mutableStateListOf(),
+    val loading : Boolean = false,
+)
