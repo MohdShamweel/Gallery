@@ -1,12 +1,10 @@
+import com.shamweel.gallery.AppBuildType
+
 plugins {
     alias(libs.plugins.gallery.android.application)
     alias(libs.plugins.gallery.android.application.flavor)
-    //  alias(libs.plugins.gallery.android.application.build.type)
     alias(libs.plugins.gallery.android.application.compose)
     alias(libs.plugins.gallery.android.hilt)
-    // alias(libs.plugins.android.application)
-    //alias(libs.plugins.kotlin.android)
-    //alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -18,6 +16,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = AppBuildType.DEBUG.applicationIdSuffix
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -26,15 +27,10 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    buildFeatures {
-        compose = true
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
     }
 }
 

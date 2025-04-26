@@ -22,3 +22,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Gallery"
 include(":app")
+include(":core:common")
+include(":core:data")
+include(":core:designsystem")
+include(":core:domain")
+include(":core:model")
+include(":core:ui")
+include(":feature:gallery")

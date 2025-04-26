@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.LibraryExtension
 import com.shamweel.gallery.configureFlavors
 import com.shamweel.gallery.configureKotlinAndroid
@@ -16,7 +17,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 35
+                namespace = libs.findVersion("appId").get().toString()
+                defaultConfig.targetSdk = libs.findVersion("appTargetSdk").get().toString().toInt()
                 defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 testOptions.animationsDisabled = true
                 configureFlavors(this)
@@ -27,8 +29,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             dependencies {
                 "androidTestImplementation"(libs.findLibrary("kotlin.test").get())
                 "testImplementation"(libs.findLibrary("kotlin.test").get())
-
-                "implementation"(libs.findLibrary("androidx.tracing.ktx").get())
             }
         }
     }
