@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.shamweel.feature.album.navigation.albumScreen
 import com.shamweel.feature.album.navigation.navigateToAlbum
+import com.shamweel.feature.mediapager.navigation.mediaPagerScreen
+import com.shamweel.feature.mediapager.navigation.navigateToMediaPager
 import com.shamweel.gallery.feature.gallery.navigation.HomeBaseRoute
 import com.shamweel.gallery.feature.gallery.navigation.homeScreen
 
@@ -22,11 +24,16 @@ fun AppNavHost(
             },
             albumDestination = {
                 albumScreen(
-                    onMediaClick = { mediaId, albumType ->
-                        // navController.navigateToMedia(mediaId, albumType)
+                    onMediaClick = { bucketId, index , albumType ->
+                         navController.navigateToMediaPager(bucketId, index,  albumType)
                     },
                     onNavigateBack = {
                         navController.popBackStack()
+                    },
+                    mediaPagerDestination = {
+                        mediaPagerScreen {
+                            navController.popBackStack()
+                        }
                     }
                 )
             }

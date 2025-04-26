@@ -1,12 +1,10 @@
-package com.shamweel.feature.album
+package com.shamweel.feature.mediapager
 
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shamweel.gallery.core.common.AlbumType
 import com.shamweel.gallery.core.common.MediaType
-import com.shamweel.gallery.core.common.MediaViewStyle
-import com.shamweel.gallery.core.common.ShareInstance
 import com.shamweel.gallery.core.domain.MediaUseCases
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -20,17 +18,18 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@HiltViewModel(assistedFactory = AlbumViewModel.Factory::class)
-class AlbumViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = MediaPagerViewModel.Factory::class)
+class MediaPagerViewModel @AssistedInject constructor(
     private val useCase: MediaUseCases,
     @Assisted val bucketId: Long?,
     @Assisted val albumType: AlbumType,
+    @Assisted val index: Int,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(AlbumState())
+    private val _state = MutableStateFlow(MediaPagerState(selectedIndex = index))
     val state = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<AlbumEvent>()
+    private val _event = MutableSharedFlow<MediaPagerEvent>()
     val event = _event.asSharedFlow()
 
     init {
@@ -44,8 +43,6 @@ class AlbumViewModel @AssistedInject constructor(
                     onState(
                         state.value.copy(
                             mediaList = it.toMutableStateList(),
-                            bucketId = bucketId,
-                            bucketName = albumType.label,
                             loading = false
                         )
                     )
@@ -57,8 +54,6 @@ class AlbumViewModel @AssistedInject constructor(
                     onState(
                         state.value.copy(
                             mediaList = it.toMutableStateList(),
-                            bucketId = bucketId,
-                            bucketName = albumType.label,
                             loading = false
                         )
                     )
@@ -70,8 +65,6 @@ class AlbumViewModel @AssistedInject constructor(
                     onState(
                         state.value.copy(
                             mediaList = it.toMutableStateList(),
-                            bucketId = bucketId,
-                            bucketName = it.firstOrNull()?.bucketName,
                             loading = false
                         )
                     )
@@ -82,27 +75,16 @@ class AlbumViewModel @AssistedInject constructor(
     }
 
 
-    fun onIntent(intent: AlbumIntent) {
-        when (intent) {
-            AlbumIntent.ToggleGridView -> {
-                val mediaStyle = when(state.value.viewStyle) {
-                    MediaViewStyle.GRID -> MediaViewStyle.LINEAR
-                    MediaViewStyle.LINEAR -> MediaViewStyle.STAGGERED
-                    MediaViewStyle.STAGGERED -> MediaViewStyle.GRID
-                }
-                ShareInstance.mediaViewStyle = mediaStyle
-                onState(
-                    state.value.copy(
-                        viewStyle = mediaStyle
-                    )
-                )
+    fun onIntent(intent: MediaPagerIntent) {
+        when(intent) {
+            is MediaPagerIntent.SelectIndex -> {
+                onState(state.value.copy(selectedIndex = intent.index))
             }
         }
-
     }
 
 
-    private fun onState(state: AlbumState) {
+    private fun onState(state: MediaPagerState) {
         _state.update { state }
     }
 
@@ -110,8 +92,9 @@ class AlbumViewModel @AssistedInject constructor(
     interface Factory {
         fun create(
             bucketId: Long?,
-            albumType: AlbumType
-        ): AlbumViewModel
+            index: Int,
+            albumType : AlbumType
+        ): MediaPagerViewModel
     }
 
 }

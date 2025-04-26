@@ -35,12 +35,15 @@ import org.xmlpull.v1.XmlPullParser
 @OptIn(androidx.media3.common.util.UnstableApi::class)
 fun VideoPlayer(
     modifier: Modifier = Modifier,
-    uri: Uri,
+    uri: Uri?,
     isAdjustSelfAspectRatio: Boolean = false,
     isAutoPlay: Boolean = false,
     isScaleCrop: Boolean = false,
-    isUseController : Boolean = false,
+    isUseController: Boolean = false,
+    isMute: Boolean = true
 ) {
+
+    if (uri == null) return
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var lifecycle by remember {
@@ -57,7 +60,9 @@ fun VideoPlayer(
         ExoPlayer.Builder(context)
             .setLoadControl(loadControl)
             .build().apply {
-                volume = 0f
+                if (isMute) {
+                    volume = 0f
+                }
                 playWhenReady = isAutoPlay
                 videoScalingMode =
                     if (isScaleCrop) C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING else C.VIDEO_SCALING_MODE_DEFAULT

@@ -71,6 +71,7 @@ class MediaDataSourceImpl @Inject constructor(
         selectionArgs: Array<String>? = null,
     ): List<MediaSourceFile> {
         val mediaFiles = mutableListOf<MediaSourceFile>()
+        val orderBy = MediaStore.Video.Media.DATE_TAKEN
 
         val projectionArray = arrayOf(
             projection.id,
@@ -88,7 +89,7 @@ class MediaDataSourceImpl @Inject constructor(
             projectionArray,
             selection,
             selectionArgs,
-            null
+            "$orderBy DESC"
         )?.use { cursor ->
             val idColumn = cursor.getColumnIndexOrThrow(projection.id)
             val nameColumn = cursor.getColumnIndexOrThrow(projection.displayName)

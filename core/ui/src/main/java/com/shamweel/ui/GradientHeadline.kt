@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.shamweel.gallery.core.designsystem.theme.Neutral100
@@ -36,7 +37,8 @@ fun GradientHeadline(
             text = text,
             color = Neutral100.copy(alpha = 0.4f),
             textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.headlineSmall.copy(
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineMedium.copy(
                 brush = brush
             )
         )

@@ -26,15 +26,16 @@ fun NavController.navigateToAlbum(
 }
 
 fun NavGraphBuilder.albumScreen(
-    onMediaClick: (String, AlbumType) -> Unit,
-    onNavigateBack: () -> Unit
+    onMediaClick: (Long?, Int, AlbumType) -> Unit,
+    onNavigateBack: () -> Unit,
+    mediaPagerDestination: NavGraphBuilder.() -> Unit,
 ) {
     composable<AlbumDataRoute> { entry ->
         val bucketId = entry.toRoute<AlbumDataRoute>().bucketId
         val albumType = entry.toRoute<AlbumDataRoute>().albumType
         AlbumScreen(
-            onMediaClick = {
-                onMediaClick(it, albumType)
+            onMediaClick = { bucketId, index ->
+                onMediaClick(bucketId, index,  albumType)
             },
             onNavigateBack = onNavigateBack,
             viewModel = hiltViewModel<AlbumViewModel, AlbumViewModel.Factory>(
@@ -44,4 +45,5 @@ fun NavGraphBuilder.albumScreen(
             },
         )
     }
+    mediaPagerDestination()
 }
