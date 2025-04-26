@@ -37,6 +37,7 @@ android {
 dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":feature:gallery"))
+    implementation(project(":feature:album"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

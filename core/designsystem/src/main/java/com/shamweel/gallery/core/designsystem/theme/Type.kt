@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.shamweel.gallery.R
+import com.shamweel.gallery.core.designsystem.R
 
 private val ReadexProFontFamily = FontFamily(
     Font(R.font.readex_pro_light, FontWeight.Light),

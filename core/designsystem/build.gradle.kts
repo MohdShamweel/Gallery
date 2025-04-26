@@ -4,6 +4,10 @@ plugins {
     alias(libs.plugins.gallery.android.library.compose)
 }
 
+android {
+    namespace = "${libs.versions.appId.get()}.core.designsystem"
+}
+
 dependencies {
 
     api(libs.androidx.compose.foundation)

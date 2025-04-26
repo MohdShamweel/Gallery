@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "${libs.versions.appId.get()}.feature.gallery"
+    namespace = "${libs.versions.appId.get()}.feature.album"
 }
 
 dependencies {

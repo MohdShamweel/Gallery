@@ -15,16 +15,57 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+
 val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Tertiary0,
+    onPrimary = Tertiary50,
+    primaryContainer = Tertiary10,
+    onPrimaryContainer = Tertiary90,
+    secondary = Secondary0,
+    onSecondary = Secondary50,
+    secondaryContainer = Secondary10,
+    onSecondaryContainer = Secondary90,
+    tertiary = Tertiary0,
+    onTertiary = Tertiary50,
+    tertiaryContainer = Tertiary10,
+    onTertiaryContainer = Tertiary90,
+    error = Error0,
+    onError = Error50,
+    errorContainer = Error30,
+    onErrorContainer = Error90,
+    background = Neutral0,
+    onBackground = Neutral100,
+    surface = Neutral10,
+    onSurface = Neutral100,
+    surfaceVariant = Neutral30,
+    onSurfaceVariant = Neutral100,
+    outline = Neutral50 ,
 )
 
-val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+val LightColorScheme = darkColorScheme(
+    primary = Tertiary0,
+    onPrimary = Tertiary50,
+    primaryContainer = Tertiary10,
+    onPrimaryContainer = Tertiary90,
+    secondary = Secondary0,
+    onSecondary = Secondary50,
+    secondaryContainer = Secondary10,
+    onSecondaryContainer = Secondary90,
+    tertiary = Tertiary0,
+    onTertiary = Tertiary50,
+    tertiaryContainer = Tertiary10,
+    onTertiaryContainer = Tertiary90,
+    error = Error0,
+    onError = Error50,
+    errorContainer = Error30,
+    onErrorContainer = Error90,
+    background = Neutral0,
+    onBackground = Neutral100,
+    surface = Neutral10,
+    onSurface = Neutral100,
+    surfaceVariant = Neutral30,
+    onSurfaceVariant = Neutral100,
+    outline = Neutral50 ,
 )
 
 @Composable

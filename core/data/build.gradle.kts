@@ -4,6 +4,10 @@ plugins {
     id("kotlinx-serialization")
 }
 
+android {
+    namespace = "${libs.versions.appId.get()}.core.data"
+}
+
 dependencies {
     api(project(":core:common"))
     api(project(":core:model"))
