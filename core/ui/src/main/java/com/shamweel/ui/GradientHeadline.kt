@@ -39,7 +39,7 @@ fun GradientHeadline(
             color = color.copy(alpha = 0.4f),
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineMedium.copy(
+            style = MaterialTheme.typography.headlineSmall.copy(
                 brush = brush
             )
         )
