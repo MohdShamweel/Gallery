@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.common.MediaViewStyle
-import com.shamweel.gallery.core.common.ShareInstance
 import com.shamweel.gallery.core.domain.MediaUseCases
+import com.shamweel.gallery.core.domain.prefs.AppPrefsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCase: MediaUseCases,
+    private val prefsUseCases: AppPrefsUseCases,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -29,7 +30,16 @@ class HomeViewModel @Inject constructor(
     val event = _event.asSharedFlow()
 
     init {
+        getPrefs()
         MediaType.entries.forEach { getMedia(it) }
+    }
+
+    private fun getPrefs() {
+        viewModelScope.launch {
+            prefsUseCases.get().collectLatest {
+                onState(state.value.copy(prefs = it))
+            }
+        }
     }
 
     fun getMedia(type: MediaType) {
@@ -80,17 +90,19 @@ class HomeViewModel @Inject constructor(
     fun onIntent(intent: HomeIntent) {
         when (intent) {
             HomeIntent.ToggleGridView -> {
-                val mediaStyle = when (state.value.viewStyle) {
+                val prefStyle =
+                    MediaViewStyle.entries.find { it.code == state.value.prefs?.mediaViewStyleCode }
+                val mediaStyle = when (prefStyle) {
                     MediaViewStyle.GRID -> MediaViewStyle.LINEAR
                     MediaViewStyle.LINEAR -> MediaViewStyle.STAGGERED
-                    MediaViewStyle.STAGGERED -> MediaViewStyle.GRID
+                    else -> MediaViewStyle.GRID
                 }
-                ShareInstance.mediaViewStyle = mediaStyle
-                onState(
-                    state.value.copy(
-                        viewStyle = mediaStyle
+                viewModelScope.launch {
+                    val prefs = state.value.prefs?.copy(
+                        mediaViewStyleCode = mediaStyle.code
                     )
-                )
+                    prefsUseCases.update(prefs)
+                }
             }
         }
 

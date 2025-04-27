@@ -3,7 +3,7 @@ package com.shamweel.feature.album
 import androidx.compose.runtime.mutableStateListOf
 import com.shamweel.gallery.core.common.AlbumType
 import com.shamweel.gallery.core.common.MediaViewStyle
-import com.shamweel.gallery.core.common.ShareInstance
+import com.shamweel.gallery.core.model.AppPrefs
 import com.shamweel.gallery.core.model.MediaSource
 
 data class AlbumState(
@@ -12,5 +12,5 @@ data class AlbumState(
     val bucketName: String? = null,
     val albumType : AlbumType? = null,
     val loading: Boolean = true,
-    val viewStyle: MediaViewStyle = ShareInstance.mediaViewStyle,
+    val prefs : AppPrefs? = null,
 )

@@ -76,9 +76,11 @@ internal fun HomeScreen(
     val context = LocalContext.current
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val mediaViewStyle = remember(state.prefs?.mediaViewStyleCode) {
+        MediaViewStyle.entries.find { it.code == state.prefs?.mediaViewStyleCode } ?: MediaViewStyle.GRID
+    }
 
     val items = remember { mutableStateListOf<MediaSource>() }
-    val label by remember { mutableStateOf<String>("") }
 
     LaunchedEffect(
         state.mediaAllImages,
@@ -131,7 +133,7 @@ internal fun HomeScreen(
                         }
                     ) {
                         Icon(
-                            imageVector = when (state.viewStyle) {
+                            imageVector = when (mediaViewStyle) {
                                 MediaViewStyle.GRID -> Icons.Default.GridView
                                 MediaViewStyle.LINEAR -> Icons.Default.List
                                 MediaViewStyle.STAGGERED -> Icons.Default.Style
@@ -192,7 +194,7 @@ internal fun HomeScreen(
             StyleLayout(
                 modifier = Modifier
                     .fillMaxSize(),
-                viewStyle = state.viewStyle,
+                viewStyle = mediaViewStyle,
                 adaptiveWidth = 150.dp,
                 space = 8.dp,
                 list = items,

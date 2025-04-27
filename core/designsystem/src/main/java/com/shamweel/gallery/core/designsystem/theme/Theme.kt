@@ -42,7 +42,40 @@ val DarkColorScheme = darkColorScheme(
     outline = Neutral50 ,
 )
 
-val LightColorScheme = darkColorScheme(
+val LightColorScheme = lightColorScheme(
+    primary = Tertiary40,
+    onPrimary = Tertiary0,
+    primaryContainer = Tertiary90,
+    onPrimaryContainer = Tertiary10,
+
+    secondary = Secondary40,
+    onSecondary = Secondary0,
+    secondaryContainer = Secondary90,
+    onSecondaryContainer = Secondary10,
+
+    tertiary = Tertiary_Variant40,
+    onTertiary = Tertiary40,
+    tertiaryContainer = Tertiary_Variant90,
+    onTertiaryContainer = Tertiary_Variant10,
+
+    error = Error40,
+    onError = Error0,
+    errorContainer = Error90,
+    onErrorContainer = Error10,
+
+    background = Neutral99,
+    onBackground = Neutral10,
+
+    surface = Neutral99,
+    onSurface = Neutral10,
+
+    surfaceVariant = Neutral90,
+    onSurfaceVariant = Neutral30,
+
+    outline = Neutral60,
+)
+
+/*val LightColorScheme = darkColorScheme(
     primary = Tertiary0,
     onPrimary = Tertiary50,
     primaryContainer = Tertiary10,
@@ -66,7 +99,7 @@ val LightColorScheme = darkColorScheme(
     surfaceVariant = Neutral30,
     onSurfaceVariant = Neutral100,
     outline = Neutral50 ,
-)
+)*/
 
 @Composable
 fun GalleryTheme(

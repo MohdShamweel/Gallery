@@ -118,7 +118,7 @@ internal fun MediaPagerScreen(
                 navigationIcon = {
                     IconButton(onClick = { onNavigateBack() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.Default.ArrowBackIosNew,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onBackground
                         )

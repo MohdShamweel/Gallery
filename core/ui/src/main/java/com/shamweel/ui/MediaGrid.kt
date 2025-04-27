@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.model.MediaSource
 
@@ -49,10 +48,10 @@ fun MediaGrid(
             }
 
             else -> {
-                AsyncImage(
+                UriImage(
                     modifier = Modifier
                         .fillMaxSize(),
-                    model = mediaSource.contentUri,
+                    uri = mediaSource.contentUri,
                     contentDescription = mediaSource.name,
                     contentScale = ContentScale.Crop
                 )

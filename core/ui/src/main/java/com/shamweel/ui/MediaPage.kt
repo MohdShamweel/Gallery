@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import coil.compose.AsyncImage
 import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.model.MediaSource
 
@@ -36,10 +35,10 @@ fun MediaPage(
             }
 
             else -> {
-                AsyncImage(
+                UriImage(
                     modifier = Modifier
                         .fillMaxSize(),
-                    model = mediaSource.contentUri,
+                    uri = mediaSource.contentUri,
                     contentDescription = mediaSource.name,
                     contentScale = ContentScale.FillWidth
                 )

@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.model.MediaSource
 import com.shamweel.ui.UriImage

@@ -25,6 +25,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -69,6 +70,9 @@ internal fun AlbumScreen(
 ) {
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    val mediaViewStyle = remember(state.prefs?.mediaViewStyleCode) {
+        MediaViewStyle.entries.firstOrNull { it.code == state.prefs?.mediaViewStyleCode } ?: MediaViewStyle.GRID
+    }
 
     Scaffold(
         modifier = modifier
@@ -105,10 +109,10 @@ internal fun AlbumScreen(
                         }
                     ) {
                         Icon(
-                            imageVector = when (state.viewStyle) {
+                            imageVector = when (mediaViewStyle) {
                                 MediaViewStyle.GRID -> Icons.Default.GridView
                                 MediaViewStyle.LINEAR -> Icons.Default.List
-                                MediaViewStyle.STAGGERED -> Icons.Default.Style
+                                else -> Icons.Default.Style
                             },
                             contentDescription = null
                         )
@@ -127,7 +131,7 @@ internal fun AlbumScreen(
             StyleLayout(
                 modifier = Modifier
                     .fillMaxSize(),
-                viewStyle = state.viewStyle,
+                viewStyle = mediaViewStyle,
                 list = state.mediaList,
                 onItemClick = {
                     onMediaClick(it.bucketId, state.mediaList.indexOf(it))

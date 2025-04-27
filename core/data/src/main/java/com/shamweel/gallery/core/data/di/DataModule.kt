@@ -1,5 +1,7 @@
 package com.shamweel.gallery.core.data.di
 
+import com.shamweel.gallery.core.data.repository.AppPreferencesRepository
+import com.shamweel.gallery.core.data.repository.AppPreferencesRepositoryImpl
 import com.shamweel.gallery.core.data.repository.MediaRepository
 import com.shamweel.gallery.core.data.repository.MediaRepositoryImpl
 import dagger.Binds
@@ -15,5 +17,10 @@ interface DataModule  {
     fun bindsMediaRepository(
         mediaRepositoryImpl: MediaRepositoryImpl
     ) : MediaRepository
+
+    @Binds
+    fun bindsAppPreferencesRepository(
+        appPreferencesRepositoryImpl: AppPreferencesRepositoryImpl
+    ) : AppPreferencesRepository
 
 }

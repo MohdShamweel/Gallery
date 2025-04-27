@@ -5,6 +5,9 @@ import com.shamweel.gallery.core.domain.GetAlbumsUseCase
 import com.shamweel.gallery.core.domain.GetAllMediaByTypeUseCase
 import com.shamweel.gallery.core.domain.GetMediaUseCase
 import com.shamweel.gallery.core.domain.MediaUseCases
+import com.shamweel.gallery.core.domain.prefs.AppPrefsUseCases
+import com.shamweel.gallery.core.domain.prefs.GetAppPrefsUseCase
+import com.shamweel.gallery.core.domain.prefs.UpdateAppPrefUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +30,16 @@ object DomainModule {
         getAlbums = getAlbums,
         getAlbum = getAlbum,
         getMedia = getMedia,
+    )
+
+    @Singleton
+    @Provides
+    fun providesPreferencesUseCase(
+        get: GetAppPrefsUseCase,
+        update: UpdateAppPrefUseCase
+    ): AppPrefsUseCases = AppPrefsUseCases(
+        get = get,
+        update = update
     )
 
 }

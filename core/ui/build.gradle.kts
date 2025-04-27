@@ -12,6 +12,8 @@ dependencies {
     api(project(":core:model"))
     api(project(":core:designsystem"))
 
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
     implementation(libs.coil.gif.compose)

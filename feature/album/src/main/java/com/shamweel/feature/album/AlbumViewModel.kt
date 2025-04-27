@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.shamweel.gallery.core.common.AlbumType
 import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.common.MediaViewStyle
-import com.shamweel.gallery.core.common.ShareInstance
 import com.shamweel.gallery.core.domain.MediaUseCases
+import com.shamweel.gallery.core.domain.prefs.AppPrefsUseCases
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = AlbumViewModel.Factory::class)
 class AlbumViewModel @AssistedInject constructor(
     private val useCase: MediaUseCases,
+    private val prefsUseCases: AppPrefsUseCases,
     @Assisted val bucketId: Long?,
     @Assisted val albumType: AlbumType,
 ) : ViewModel() {
@@ -35,6 +36,15 @@ class AlbumViewModel @AssistedInject constructor(
 
     init {
         getAlbum()
+        getPrefs()
+    }
+
+    private fun getPrefs() {
+        viewModelScope.launch {
+            prefsUseCases.get().collectLatest {
+                onState(state.value.copy(prefs = it))
+            }
+        }
     }
 
     fun getAlbum() = viewModelScope.launch {
@@ -85,17 +95,18 @@ class AlbumViewModel @AssistedInject constructor(
     fun onIntent(intent: AlbumIntent) {
         when (intent) {
             AlbumIntent.ToggleGridView -> {
-                val mediaStyle = when(state.value.viewStyle) {
+                val prefStyle = MediaViewStyle.entries.find { it.code == state.value.prefs?.mediaViewStyleCode }
+                val mediaStyle = when(prefStyle) {
                     MediaViewStyle.GRID -> MediaViewStyle.LINEAR
                     MediaViewStyle.LINEAR -> MediaViewStyle.STAGGERED
-                    MediaViewStyle.STAGGERED -> MediaViewStyle.GRID
+                    else -> MediaViewStyle.GRID
                 }
-                ShareInstance.mediaViewStyle = mediaStyle
-                onState(
-                    state.value.copy(
-                        viewStyle = mediaStyle
+                viewModelScope.launch {
+                    val prefs = state.value.prefs?.copy(
+                        mediaViewStyleCode = mediaStyle.code
                     )
-                )
+                    prefsUseCases.update(prefs)
+                }
             }
         }
 
