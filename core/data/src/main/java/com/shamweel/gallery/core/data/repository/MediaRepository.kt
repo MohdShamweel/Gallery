@@ -12,6 +12,4 @@ interface MediaRepository {
 
     suspend fun getAlbum(bucketId: Long): Flow<List<MediaSource>>
 
-    suspend fun getMedia(mediaId: Long): Flow<List<MediaSource>>
-
 }

@@ -58,11 +58,6 @@ class MediaDataSourceImpl @Inject constructor(
         return emptyList()
     }
 
-    override suspend fun getMedia(mediaId: Long): List<MediaSourceFile> {
-        return emptyList()
-    }
-
-
     private fun getMediaFiles(
         type: MediaType,
         queryUri: Uri,

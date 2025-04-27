@@ -11,6 +11,5 @@ data class HomeState(
     val mediaAllImages : List<MediaSource> = mutableStateListOf(),
     val mediaAllVideos : List<MediaSource> = mutableStateListOf(),
     val loading : Boolean = true,
-    val prefsLoading : Boolean = true,
     val prefs: AppPrefs? = null,
 )

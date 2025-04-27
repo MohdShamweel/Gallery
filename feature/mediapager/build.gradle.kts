@@ -13,6 +13,11 @@ dependencies {
     api(project(":core:domain"))
     api(project(":core:model"))
     api(project(":core:ui"))
+    testImplementation(project(":core:testing"))
+    testImplementation(project(":core:data"))
+    androidTestImplementation(project(":core:data"))
+    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(project(":ui-test-hilt-manifest"))
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
@@ -31,4 +36,10 @@ dependencies {
     testImplementation(libs.hilt.android.testing)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.testManifest)
+    androidTestImplementation(libs.hilt.android.testing)
 }

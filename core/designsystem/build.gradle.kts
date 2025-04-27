@@ -17,13 +17,9 @@ dependencies {
     api(libs.androidx.compose.material3.adaptive)
     api(libs.androidx.compose.material3.navigationSuite)
     api(libs.androidx.compose.runtime)
-
     implementation(libs.coil.kt.compose)
 
-    testImplementation(libs.androidx.compose.ui.test)
-    testImplementation(libs.androidx.compose.ui.testManifest)
-
-    testImplementation(libs.hilt.android.testing)
-    implementation(libs.kotlinx.coroutines.core)
-    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.testManifest)
+   // androidTestImplementation(libs.androidx.test.ext.junit)
 }

@@ -39,7 +39,7 @@ fun HorizontalMediaRow(
         items(list.size) { index ->
             MediaGrid(
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(if (selectedIndex == index) 70.dp else 60.dp)
                     .aspectRatio(1f)
                     .alpha(if (selectedIndex == index) 1f else 0.6f)
                     .clickable {

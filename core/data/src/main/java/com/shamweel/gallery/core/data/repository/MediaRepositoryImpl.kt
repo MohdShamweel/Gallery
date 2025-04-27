@@ -24,9 +24,4 @@ class MediaRepositoryImpl @Inject constructor(
         emit(mediaDataSource.getAlbum(bucketId).map { it.toExternalMediaSource() })
     }
 
-    override suspend fun getMedia(mediaId: Long): Flow<List<MediaSource>> = flow {
-        emit(mediaDataSource.getMedia(mediaId).map { it.toExternalMediaSource() })
-    }
-
-
 }

@@ -3,7 +3,6 @@ package com.shamweel.gallery.core.domain.di
 import com.shamweel.gallery.core.domain.GetAlbumUseCase
 import com.shamweel.gallery.core.domain.GetAlbumsUseCase
 import com.shamweel.gallery.core.domain.GetAllMediaByTypeUseCase
-import com.shamweel.gallery.core.domain.GetMediaUseCase
 import com.shamweel.gallery.core.domain.MediaUseCases
 import com.shamweel.gallery.core.domain.prefs.AppPrefsUseCases
 import com.shamweel.gallery.core.domain.prefs.GetAppPrefsUseCase
@@ -23,13 +22,11 @@ object DomainModule {
     fun providesMediaUseCase(
         getAllByType: GetAllMediaByTypeUseCase,
         getAlbums: GetAlbumsUseCase,
-        getAlbum: GetAlbumUseCase,
-        getMedia: GetMediaUseCase,
+        getAlbum: GetAlbumUseCase
     ): MediaUseCases = MediaUseCases(
         getAllByType = getAllByType,
         getAlbums = getAlbums,
-        getAlbum = getAlbum,
-        getMedia = getMedia,
+        getAlbum = getAlbum
     )
 
     @Singleton
