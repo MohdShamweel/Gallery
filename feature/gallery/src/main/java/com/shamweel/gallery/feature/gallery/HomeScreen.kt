@@ -8,11 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Style
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,8 +27,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -77,7 +79,8 @@ internal fun HomeScreen(
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val mediaViewStyle = remember(state.prefs?.mediaViewStyleCode) {
-        MediaViewStyle.entries.find { it.code == state.prefs?.mediaViewStyleCode } ?: MediaViewStyle.GRID
+        MediaViewStyle.entries.find { it.code == state.prefs?.mediaViewStyleCode }
+            ?: MediaViewStyle.GRID
     }
 
     val items = remember { mutableStateListOf<MediaSource>() }
@@ -153,92 +156,106 @@ internal fun HomeScreen(
                 .consumeWindowInsets(innerPadding)
         ) {
 
-            @Composable
-            fun MediaGridHome(
-                modifier: Modifier,
-                mediaSource: MediaSource
-            ) {
-                MediaCoverGrid(
-                    modifier = modifier,
-                    label = when {
-                        mediaSource.bucketId != null -> {
-                            mediaSource.bucketName
-                        }
-
-                        mediaSource.mediaType == MediaType.IMAGE -> {
-                            stringResource(uiR.string.label_all_images)
-                        }
-
-                        else -> {
-                            stringResource(uiR.string.label_all_videos)
-                        }
-                    },
-                    mediaSource = mediaSource,
-                    count = when {
-                        mediaSource.bucketId != null -> {
-                            state.albums[mediaSource.bucketName]?.size
-                        }
-
-                        mediaSource.mediaType == MediaType.IMAGE -> {
-                            state.mediaAllImages.size
-                        }
-
-                        else -> {
-                            state.mediaAllVideos.size
-                        }
-                    }
-                )
-
-            }
-
-            StyleLayout(
-                modifier = Modifier
-                    .fillMaxSize(),
-                viewStyle = mediaViewStyle,
-                adaptiveWidth = 150.dp,
-                space = 8.dp,
-                list = items,
-                onItemClick = {
-                    when {
-                        it.bucketId != null -> {
-                            onAlbumClick(AlbumType.BUCKET, it.bucketId)
-                        }
-
-                        it.mediaType == MediaType.IMAGE -> {
-                            onAlbumClick(AlbumType.ALL_IMAGES, null)
-                        }
-
-                        it.mediaType == MediaType.VIDEO -> {
-                            onAlbumClick(AlbumType.ALL_VIDEOS, null)
-                        }
-                    }
-                },
-                onGridItemContent = {
-                    MediaGridHome(
+            when {
+                state.prefsLoading || state.loading -> {
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f),
-                        mediaSource = it,
-                    )
-                },
-                onColumnItemContent = {
-                    MediaGridHome(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp),
-                        mediaSource = it
-                    )
-                },
-                onStaggeredGridItemContent = {
-                    MediaGridHome(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(if (it.id?.rem(2L) == 0L) 0.5f else 1f),
-                        mediaSource = it
+                            .align(Alignment.Center)
+                            .size(32.dp),
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
 
-            )
+                else -> {
+
+                    @Composable
+                    fun MediaGridHome(
+                        modifier: Modifier,
+                        mediaSource: MediaSource
+                    ) {
+                        MediaCoverGrid(
+                            modifier = modifier,
+                            label = when {
+                                mediaSource.bucketId != null -> {
+                                    mediaSource.bucketName
+                                }
+
+                                mediaSource.mediaType == MediaType.IMAGE -> {
+                                    stringResource(uiR.string.label_all_images)
+                                }
+
+                                else -> {
+                                    stringResource(uiR.string.label_all_videos)
+                                }
+                            },
+                            mediaSource = mediaSource,
+                            count = when {
+                                mediaSource.bucketId != null -> {
+                                    state.albums[mediaSource.bucketName]?.size
+                                }
+
+                                mediaSource.mediaType == MediaType.IMAGE -> {
+                                    state.mediaAllImages.size
+                                }
+
+                                else -> {
+                                    state.mediaAllVideos.size
+                                }
+                            }
+                        )
+
+                    }
+
+                    StyleLayout(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        viewStyle = mediaViewStyle,
+                        adaptiveWidth = 150.dp,
+                        space = 8.dp,
+                        list = items,
+                        onItemClick = {
+                            when {
+                                it.bucketId != null -> {
+                                    onAlbumClick(AlbumType.BUCKET, it.bucketId)
+                                }
+
+                                it.mediaType == MediaType.IMAGE -> {
+                                    onAlbumClick(AlbumType.ALL_IMAGES, null)
+                                }
+
+                                it.mediaType == MediaType.VIDEO -> {
+                                    onAlbumClick(AlbumType.ALL_VIDEOS, null)
+                                }
+                            }
+                        },
+                        onGridItemContent = {
+                            MediaGridHome(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(1f),
+                                mediaSource = it,
+                            )
+                        },
+                        onColumnItemContent = {
+                            MediaGridHome(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp),
+                                mediaSource = it
+                            )
+                        },
+                        onStaggeredGridItemContent = {
+                            MediaGridHome(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(if (it.id?.rem(2L) == 0L) 0.5f else 1f),
+                                mediaSource = it
+                            )
+                        }
+
+                    )
+                }
+            }
         }
     }
 }

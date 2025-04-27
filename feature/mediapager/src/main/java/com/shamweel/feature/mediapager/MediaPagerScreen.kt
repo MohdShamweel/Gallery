@@ -1,6 +1,9 @@
 package com.shamweel.feature.mediapager
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,10 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.shamweel.feature.mediapager.component.HorizontalMediaRow
+import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.common.secondsToFormatterDate
 import com.shamweel.gallery.core.common.toReadableSize
 import com.shamweel.ui.MediaPage
 import kotlinx.coroutines.flow.SharedFlow
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun MediaPagerScreen(
@@ -66,6 +71,11 @@ internal fun MediaPagerScreen(
     val pagerState = rememberPagerState(state.selectedIndex) { state.mediaList.size }
     val pageMedia =
         remember(pagerState.currentPage) { state.mediaList.getOrNull(pagerState.currentPage) }
+
+    val horizontalScrollBottomPadding by animateDpAsState(
+        targetValue = if (pageMedia?.mediaType == MediaType.VIDEO) 100.dp else 32.dp,
+        animationSpec = tween(1000, easing = LinearEasing)
+    )
 
     LaunchedEffect(state.selectedIndex) {
         pagerState.animateScrollToPage(state.selectedIndex)
@@ -132,7 +142,7 @@ internal fun MediaPagerScreen(
             HorizontalMediaRow(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(bottom = 32.dp),
+                    .padding(bottom = horizontalScrollBottomPadding),
                 list = state.mediaList,
                 selectedIndex = pagerState.currentPage,
                 onSelected = {

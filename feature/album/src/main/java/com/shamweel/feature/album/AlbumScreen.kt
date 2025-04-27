@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Style
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,9 +29,11 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.shamweel.feature.album.component.MediaLinearStyle
@@ -72,7 +76,8 @@ internal fun AlbumScreen(
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val mediaViewStyle = remember(state.prefs?.mediaViewStyleCode) {
-        MediaViewStyle.entries.firstOrNull { it.code == state.prefs?.mediaViewStyleCode } ?: MediaViewStyle.GRID
+        MediaViewStyle.entries.firstOrNull { it.code == state.prefs?.mediaViewStyleCode }
+            ?: MediaViewStyle.GRID
     }
 
     Scaffold(
@@ -134,40 +139,53 @@ internal fun AlbumScreen(
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding)
         ) {
-            StyleLayout(
-                modifier = Modifier
-                    .fillMaxSize(),
-                viewStyle = mediaViewStyle,
-                list = state.mediaList,
-                onItemClick = {
-                    onMediaClick(it.bucketId, state.mediaList.indexOf(it))
-                },
-                onGridItemContent = {
-                    MediaGrid(
+
+            when {
+                state.prefsLoading || state.loading -> {
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f),
-                        mediaSource = it,
-                    )
-                },
-                onColumnItemContent = {
-                    MediaLinearStyle(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        mediaSource = it
-                    )
-                },
-                onStaggeredGridItemContent = {
-                    MediaGrid(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(if (it.id?.rem(2L) == 0L) 0.5f else 1f),
-                        mediaSource = it,
+                            .align(Alignment.Center)
+                            .size(32.dp),
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
 
-            )
+                else -> {
+
+                    StyleLayout(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        viewStyle = mediaViewStyle,
+                        list = state.mediaList,
+                        onItemClick = {
+                            onMediaClick(it.bucketId, state.mediaList.indexOf(it))
+                        },
+                        onGridItemContent = {
+                            MediaGrid(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(1f),
+                                mediaSource = it,
+                            )
+                        },
+                        onColumnItemContent = {
+                            MediaLinearStyle(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                mediaSource = it
+                            )
+                        },
+                        onStaggeredGridItemContent = {
+                            MediaGrid(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(if (it.id?.rem(2L) == 0L) 0.5f else 1f),
+                                mediaSource = it,
+                            )
+                        }
+                    )
+                }
+            }
         }
     }
 }
-

@@ -37,7 +37,10 @@ class HomeViewModel @Inject constructor(
     private fun getPrefs() {
         viewModelScope.launch {
             prefsUseCases.get().collectLatest {
-                onState(state.value.copy(prefs = it))
+                onState(state.value.copy(
+                    prefs = it,
+                    prefsLoading = false
+                ))
             }
         }
     }

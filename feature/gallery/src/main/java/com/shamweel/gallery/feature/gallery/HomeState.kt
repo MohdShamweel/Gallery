@@ -10,6 +10,7 @@ data class HomeState(
     val albums: MutableMap<String?, List<MediaSource>> = mutableStateMapOf(),
     val mediaAllImages : List<MediaSource> = mutableStateListOf(),
     val mediaAllVideos : List<MediaSource> = mutableStateListOf(),
-    val loading : Boolean = false,
+    val loading : Boolean = true,
+    val prefsLoading : Boolean = true,
     val prefs: AppPrefs? = null,
 )

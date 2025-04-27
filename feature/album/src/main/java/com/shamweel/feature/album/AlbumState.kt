@@ -12,5 +12,6 @@ data class AlbumState(
     val bucketName: String? = null,
     val albumType : AlbumType? = null,
     val loading: Boolean = true,
+    val prefsLoading: Boolean = true,
     val prefs : AppPrefs? = null,
 )
