@@ -10,6 +10,15 @@ plugins {
 android {
     namespace = libs.versions.appId.get()
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "gallery"
+            keyPassword = "#GALLERY_APP#"
+            storeFile = file("../gallery.jks")
+            storePassword = "#GALLERY_APP#"
+        }
+    }
+
     defaultConfig {
         applicationId = libs.versions.appId.get()
         testInstrumentationRunner = "com.shamweel.gallery.core.testing.testing.AppTestRunner"
@@ -21,6 +30,7 @@ android {
         }
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
