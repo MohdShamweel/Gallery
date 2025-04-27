@@ -10,33 +10,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.shamweel.gallery.core.common.utils.ConversionUtil
-import com.shamweel.gallery.core.common.utils.DateUtils
+import com.shamweel.gallery.core.common.secondsToFormatterDate
+import com.shamweel.gallery.core.common.toReadableSize
 import com.shamweel.gallery.core.model.MediaSource
 import com.shamweel.ui.MediaGrid
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun MediaLinearStyle(
     modifier: Modifier = Modifier,
     mediaSource: MediaSource?,
 ) {
-
-    var date = remember(mediaSource?.dateAdded) {
-        DateUtils.getDateForPattern(
-            (mediaSource?.dateAdded ?: 0L).times(TimeUnit.SECONDS.toMillis(1))
-        )
-    }
-
-    val size = remember(mediaSource?.size) {
-        ConversionUtil.bytesToHumanReadableSize(mediaSource?.size?.toDouble() ?: 0.0)
-    }
 
     Row(
         modifier = modifier
@@ -61,9 +49,9 @@ fun MediaLinearStyle(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            date?.let {
+            mediaSource?.dateAdded?.let {
                 Text(
-                    text = date,
+                    text = it.secondsToFormatterDate().orEmpty(),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Light,
                     color = MaterialTheme.colorScheme.onBackground
@@ -71,7 +59,7 @@ fun MediaLinearStyle(
             }
 
             Text(
-                text = size.toString(),
+                text = mediaSource?.size.toReadableSize(),
                 style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Light,
                 color = MaterialTheme.colorScheme.onBackground

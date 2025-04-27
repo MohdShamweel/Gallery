@@ -13,5 +13,5 @@ data class MediaSource(
     val size: Long?,
     val mediaType: MediaType?,
     val mimeType: String?,
-    val contentUri: Uri?
+    val contentUri: Uri?,
 )

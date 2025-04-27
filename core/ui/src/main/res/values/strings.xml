@@ -1,4 +1,6 @@
 <resources>
     <string name="label_all_images">All Images</string>
     <string name="label_all_videos">All Videos</string>
+    <string name="no_read_permission_title">No Read Permission</string>
+    <string name="proceed">Proceed</string>
 </resources>
