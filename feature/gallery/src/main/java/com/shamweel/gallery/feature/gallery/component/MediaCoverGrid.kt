@@ -1,4 +1,4 @@
-package com.shamweel.ui
+package com.shamweel.gallery.feature.gallery.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -15,12 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.shamweel.gallery.core.common.MediaType
 import com.shamweel.gallery.core.model.MediaSource
+import com.shamweel.ui.UriImage
+import com.shamweel.ui.VideoPlayer
 
 @Composable
-fun MediaCover(
+fun MediaCoverGrid(
     modifier: Modifier = Modifier,
     mediaSource: MediaSource?,
     label: String?,
@@ -45,17 +47,17 @@ fun MediaCover(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp),
-                    imageVector = androidx.compose.material.icons.Icons.Default.PlayArrow,
+                    imageVector = Icons.Default.PlayArrow,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onBackground
                 )
             }
 
             else -> {
-                AsyncImage(
+                UriImage(
                     modifier = Modifier
                         .fillMaxSize(),
-                    model = mediaSource.contentUri,
+                    uri = mediaSource.contentUri,
                     contentDescription = mediaSource.name,
                     contentScale = ContentScale.Crop
                 )

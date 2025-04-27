@@ -4,6 +4,8 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shamweel.gallery.core.common.MediaType
+import com.shamweel.gallery.core.common.MediaViewStyle
+import com.shamweel.gallery.core.common.ShareInstance
 import com.shamweel.gallery.core.domain.MediaUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,6 +46,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+
             MediaType.VIDEO -> {
                 viewModelScope.launch {
                     useCase.getAllByType(type).collectLatest {
@@ -56,6 +59,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+
             MediaType.FILE -> {
                 viewModelScope.launch {
                     useCase.getAlbums().collectLatest {
@@ -75,8 +79,19 @@ class HomeViewModel @Inject constructor(
 
     fun onIntent(intent: HomeIntent) {
         when (intent) {
-
-            else -> {}
+            HomeIntent.ToggleGridView -> {
+                val mediaStyle = when (state.value.viewStyle) {
+                    MediaViewStyle.GRID -> MediaViewStyle.LINEAR
+                    MediaViewStyle.LINEAR -> MediaViewStyle.STAGGERED
+                    MediaViewStyle.STAGGERED -> MediaViewStyle.GRID
+                }
+                ShareInstance.mediaViewStyle = mediaStyle
+                onState(
+                    state.value.copy(
+                        viewStyle = mediaStyle
+                    )
+                )
+            }
         }
 
     }

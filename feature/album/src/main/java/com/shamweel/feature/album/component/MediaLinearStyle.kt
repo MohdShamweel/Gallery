@@ -1,4 +1,4 @@
-package com.shamweel.ui
+package com.shamweel.feature.album.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,11 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.shamweel.gallery.core.common.utils.ConversionUtil
 import com.shamweel.gallery.core.common.utils.DateUtils
 import com.shamweel.gallery.core.model.MediaSource
+import com.shamweel.ui.MediaGrid
 import java.util.concurrent.TimeUnit
 
 @Composable
