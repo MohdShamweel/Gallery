@@ -16,9 +16,15 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             apply(plugin = "org.jetbrains.kotlin.android")
 
             extensions.configure<LibraryExtension> {
+                testOptions {
+                    unitTests {
+                        isIncludeAndroidResources = true
+                        isReturnDefaultValues = true
+                    }
+                }
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = libs.findVersion("appTargetSdk").get().toString().toInt()
-                defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                defaultConfig.testInstrumentationRunner = "com.shamweel.gallery.core.testing.testing.AppTestRunner"
                 testOptions.animationsDisabled = true
                 configureFlavors(this)
                 resourcePrefix =

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = libs.versions.appId.get()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.shamweel.gallery.core.testing.testing.AppTestRunner"
     }
 
     buildTypes {
@@ -30,6 +30,7 @@ android {
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
+            isReturnDefaultValues = true
         }
     }
 }
@@ -39,6 +40,7 @@ dependencies {
     implementation(project(":feature:gallery"))
     implementation(project(":feature:album"))
     implementation(project(":feature:mediapager"))
+    androidTestImplementation(project(":core:testing"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -51,9 +53,11 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.testManifest)
 }

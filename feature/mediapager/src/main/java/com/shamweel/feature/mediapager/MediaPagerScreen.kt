@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -123,11 +124,13 @@ internal fun MediaPagerScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .testTag("test:mediaPager:parentBox")
         ) {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .testTag("test:mediaPager:pager"),
                 contentPadding = PaddingValues(0.dp),
                 pageSpacing = 16.dp
             ) { index ->
@@ -142,7 +145,8 @@ internal fun MediaPagerScreen(
             HorizontalMediaRow(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
-                    .padding(bottom = horizontalScrollBottomPadding),
+                    .padding(bottom = horizontalScrollBottomPadding)
+                    .testTag("test:mediaPager:row"),
                 list = state.mediaList,
                 selectedIndex = pagerState.currentPage,
                 onSelected = {

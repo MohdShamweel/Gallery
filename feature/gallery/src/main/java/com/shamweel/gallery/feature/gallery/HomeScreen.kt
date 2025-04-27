@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -125,7 +126,7 @@ internal fun HomeScreen(
                 title = {
                     GradientHeadline(
                         modifier = Modifier,
-                        text = "Gallery",
+                        text = stringResource(R.string.home_screen_title),
                     )
                 },
                 actions = {
@@ -153,15 +154,18 @@ internal fun HomeScreen(
         Box(
             modifier = Modifier
                 .padding(innerPadding)
+                .fillMaxSize()
                 .consumeWindowInsets(innerPadding)
+                .testTag("test:home:parentBox")
         ) {
 
             when {
-                state.prefsLoading || state.loading -> {
+                state.loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .size(32.dp),
+                            .size(32.dp)
+                            .testTag("test:home:loader"),
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 }
@@ -208,7 +212,8 @@ internal fun HomeScreen(
 
                     StyleLayout(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .testTag("test:home:styleLayout"),
                         viewStyle = mediaViewStyle,
                         adaptiveWidth = 150.dp,
                         space = 8.dp,

@@ -13,6 +13,9 @@ dependencies {
     api(project(":core:model"))
     implementation(project(":core:media"))
     implementation(project(":core::datastore"))
+    testImplementation(project(":core:datastore-test"))
+    implementation(libs.dataStore.core)
+    implementation(libs.dataStore)
     implementation(libs.kotlinx.coroutines.core)
     testImplementation(libs.kotlinx.coroutines.test)
 }

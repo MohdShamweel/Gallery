@@ -40,7 +40,8 @@ fun MediaPage(
                         .fillMaxSize(),
                     uri = mediaSource.contentUri,
                     contentDescription = mediaSource.name,
-                    contentScale = ContentScale.FillWidth
+                    contentScale = ContentScale.FillWidth,
+                    enableShimmer = false
                 )
             }
         }

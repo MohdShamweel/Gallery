@@ -11,5 +11,10 @@ android {
 dependencies {
     api(project(":core:data"))
     api(project(":core:model"))
+    implementation(project(":core:data"))
+    implementation(project(":core:testing"))
+
     implementation(libs.javax.inject)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

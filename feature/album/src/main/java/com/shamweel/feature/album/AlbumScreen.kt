@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -136,16 +137,19 @@ internal fun AlbumScreen(
 
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .consumeWindowInsets(innerPadding)
+                .testTag("test:album:parentBox")
         ) {
 
             when {
-                state.prefsLoading || state.loading -> {
+               state.loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .size(32.dp),
+                            .size(32.dp)
+                            .testTag("test:album:loader"),
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 }
@@ -154,7 +158,8 @@ internal fun AlbumScreen(
 
                     StyleLayout(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .testTag("test:album:styleLayout"),
                         viewStyle = mediaViewStyle,
                         list = state.mediaList,
                         onItemClick = {

@@ -11,6 +11,4 @@ interface MediaDataSource {
 
     suspend fun getAlbum(bucketId: Long): List<MediaSourceFile>
 
-    suspend fun getMedia(mediaId: Long): List<MediaSourceFile>
-
 }

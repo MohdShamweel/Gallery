@@ -32,6 +32,7 @@ protobuf {
 dependencies {
     api(project(":core:common"))
     api(project(":core:model"))
+    testImplementation(project(":core:datastore-test"))
     implementation(libs.protobuf.kotlin.lite)
     implementation(libs.dataStore.core)
     implementation(libs.dataStore)

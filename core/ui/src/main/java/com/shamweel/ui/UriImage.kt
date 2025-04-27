@@ -18,6 +18,7 @@ fun UriImage(
     uri: Uri?,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
+    enableShimmer: Boolean = true
 ) {
 
     var showShimmer by remember { mutableStateOf(false) }
@@ -36,7 +37,7 @@ fun UriImage(
             showShimmer = false
         }
     )
-    if (showShimmer) {
+    if (showShimmer && enableShimmer) {
         Box(
             modifier.shimmerEffect()
         )
